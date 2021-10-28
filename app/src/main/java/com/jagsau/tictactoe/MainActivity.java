@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView playerOneScore, playerTwoScore, playerStatus;
     private Button[] buttons = new Button[9];
+    private Button resetBoard;
     private Button resetGame;
 
     private int playerOneScoreCount, playerTwoScoreCount, roundCount;
@@ -35,7 +36,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         playerTwoScore = (TextView) findViewById(R.id.playerTwoScore);
         playerStatus = (TextView) findViewById(R.id.playerStatus);
 
-        resetGame = (Button) findViewById(R.id.ResetGame);
+        resetBoard = (Button) findViewById(R.id.ResetBoard);
+        resetBoard.setOnClickListener(this);
+
+        resetGame = (Button) findViewById(R.id.resetGame);
+        resetGame.setOnClickListener(this);
 
         for(int i =0; i<9;i++){
             String buttonID = "btn_"+i;
@@ -52,6 +57,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v){
+        if(v.getId() == R.id.resetGame){
+            resetPlayerScore();
+            playAgain();
+            return;
+        }
+
+        if(v.getId() == R.id.ResetBoard){
+            playAgain();
+            return;
+        }
+
         if(!((Button)v).getText().toString().equals("")){
             return;
         }
@@ -72,13 +88,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(activePlayer){
                 playerOneScoreCount ++;
                 updatePlayerScore();
+                ((Button) v).setText("X");
+                ((Button) v).setTextColor(Color.parseColor("#FFC34A"));
                 Toast.makeText(this, "Player One Wins!", Toast.LENGTH_SHORT).show();
-                playAgain();
             } else {
                 playerTwoScoreCount ++;
                 updatePlayerScore();
+                ((Button) v).setText("X");
+                ((Button) v).setTextColor(Color.parseColor("#FFC34A"));
                 Toast.makeText(this, "Player Two Wins!", Toast.LENGTH_SHORT).show();
-                playAgain();
             }
 
         } else if (roundCount == 9){
@@ -106,6 +124,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void updatePlayerScore(){
         playerOneScore.setText(Integer.toString(playerOneScoreCount));
         playerTwoScore.setText(Integer.toString(playerTwoScoreCount));
+    }
+
+    public void resetPlayerScore(){
+        playerOneScoreCount = 0;
+        playerTwoScoreCount = 0;
+        playerOneScore.setText(Integer.toString(0));
+        playerTwoScore.setText(Integer.toString(0));
     }
 
     public void playAgain(){
