@@ -1,4 +1,4 @@
-# Tic Tac Toe Game App [android]
+# TicTacToe Game App [android]
 
 A simple TicTacToe board.
 - Mantains count for each player - Player X and Player O
